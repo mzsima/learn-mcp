@@ -3,8 +3,6 @@ flet-mcp-simpleは、MCPサーバーとfletを使ったテストアプリです�
 
 ## サンプル設定ファイル (CLINE) 
 
-以下は、個人情報を含まないサンプル設定ファイルです:
-
 ```json
 {
   "mcpServers": {
