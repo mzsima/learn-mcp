@@ -1,0 +1,11 @@
+[project]
+name = "mcp-mini-browser"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "flet-webview>=0.1.0",
+    "flet[all]>=0.27.6",
+    "mcp[cli]>=1.6.0",
+]
