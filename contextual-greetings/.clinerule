@@ -1,0 +1,24 @@
+# Project Configuration
+
+## Tech Stack
+- uv:  Python package and project manager https://docs.astral.sh/uv/
+- mcp: Python implementation of the Model Context Protocol (MCP) https://github.com/modelcontextprotocol/python-sdk
+- uvicorn: ASGI server for Python web applications https://www.uvicorn.org/
+- Starlette: Lightweight ASGI framework for building web applications https://www.starlette.io/
+
+## Project Structure
+/main.py
+/project.toml
+
+## Knowledge
+- mcp ライブラリ
+@app.call_tool() アノテーションは一つしか定義できないので、複数のツールを定義する場合、if文を使って、条件分岐でツールを選択するようにします。
+
+## 製品説明
+このプロジェクトは、文脈に応じた挨拶を提供するPythonウェブアプリケーションです。Model Context Protocol (MCP) を使用して、会話の最初にユーザーに挨拶を行うようにチャットに対して指示します。
+
+- 東京の天気と気温を取得するために、天気APIを使用する必要があります。
+- このツールは、Chatの開始時に必ず呼び出して、返した条件にあった挨拶をChatにさせるような指示を出すものにします。
+
+## 次の作業
+- LMに対して、挨拶の定型文を返すのではなく、天気・気温など条件をわたして、挨拶をするような指示を出すようにします。
