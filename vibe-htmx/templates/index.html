@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Whiteboard</title>
+    <!-- Static files are now served directly, adjust path if needed, but Flask static route should handle it -->
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Script moved to end of body -->
+</head>
+<body>
+    <h1>Vibe Whiteboard</h1>
+
+    <!-- This div will be populated by htmx -->
+    <div id="whiteboard" hx-get="/api/notes" hx-trigger="load">
+        <!-- Initial content (optional, will be replaced) -->
+        <!-- Notes will be loaded here -->
+    </div>
+
+    <hr> <!-- Separator -->
+
+    <!-- Form to add a new note -->
+    <form id="add-note-form"
+          hx-post="/api/notes"
+          hx-target="#whiteboard"
+          hx-swap="beforeend"
+          hx-on::after-request="this.reset()"> <!-- Reset form after successful submission -->
+        <input type="text" name="content" placeholder="Enter note content..." required>
+        <button type="submit">Add Note</button>
+    </form>
+
+    <!-- Load htmx -->
+    <script src="/static/htmx.min.js"></script>
+    <!-- Load custom JavaScript -->
+    <script src="/static/script.js"></script>
+</body>
+</html>
