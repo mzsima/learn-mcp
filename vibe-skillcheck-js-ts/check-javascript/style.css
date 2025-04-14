@@ -1,0 +1,121 @@
+/* 全体レイアウト */
+body {
+    background-color: #f3f4f6; /* 薄いグレー */
+    display: flex;
+    justify-content: center; /* 水平中央揃え */
+    align-items: flex-start; /* 上揃え (コンテナが上に寄るように) */
+    min-height: 100vh; /* 画面全体の高さ */
+    padding-top: 5rem; /* 上部に余白を追加して垂直方向の中央に見えるように調整 */
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.container {
+    background-color: #ffffff; /* 白い背景 */
+    padding: 1.5rem; /* パディング */
+    border-radius: 0.5rem; /* 角丸 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 影 */
+    max-width: 28rem; /* 最大幅 */
+    width: 90%; /* 幅 */
+}
+
+/* タイトル */
+h1 {
+    font-size: 1.5rem; /* フォントサイズ */
+    font-weight: bold; /* 太字 */
+    margin-bottom: 1rem; /* 下マージン */
+    text-align: center; /* 中央揃え */
+    color: #374151; /* 少し濃いグレー */
+}
+
+/* 入力エリア */
+.input-area {
+    display: flex; /* 横並び */
+    margin-bottom: 1rem; /* 下マージン */
+}
+
+#task-input {
+    flex-grow: 1; /* 横幅いっぱい */
+    padding: 0.5rem; /* パディング */
+    border: 1px solid #ccc; /* ボーダー */
+    border-top-left-radius: 0.5rem; /* 左上の角丸 */
+    border-bottom-left-radius: 0.5rem; /* 左下の角丸 */
+    border-right: none; /* 右ボーダーを削除 */
+}
+
+#task-input:focus {
+    outline: none; /* フォーカス時のデフォルトアウトラインを削除 */
+    border-color: #3b82f6; /* フォーカス時のボーダー色 */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); /* フォーカス時の影 */
+    z-index: 1; /* ボタンの上に表示 */
+    position: relative; /* z-indexを有効にするため */
+}
+
+#add-button {
+    background-color: #3b82f6; /* 背景色 (青) */
+    color: #ffffff; /* 文字色 (白) */
+    padding: 0.5rem 1rem; /* パディング */
+    border: none; /* ボーダーなし */
+    border-top-right-radius: 0.5rem; /* 右上の角丸 */
+    border-bottom-right-radius: 0.5rem; /* 右下の角丸 */
+    cursor: pointer; /* カーソルをポインターに */
+    transition: background-color 0.2s; /* ホバー時のトランジション */
+}
+
+#add-button:hover {
+    background-color: #2563eb; /* ホバー時の背景色 (濃い青) */
+}
+
+/* タスクリスト */
+#task-list {
+    list-style: none; /* リストマーカー非表示 */
+    padding: 0; /* パディングリセット */
+    display: flex; /* Flexboxを使用 */
+    flex-direction: column; /* 縦方向に並べる */
+    gap: 0.5rem; /* タスク間のスペース */
+}
+
+/* 各タスク */
+#task-list li {
+    display: flex; /* 要素を横並び */
+    align-items: center; /* 要素を垂直方向に中央揃え */
+    background-color: #f9fafb; /* 背景色 (非常に薄いグレー) */
+    padding: 0.75rem; /* パディングを少し増やす */
+    border-radius: 0.5rem; /* 角丸 */
+    border: 1px solid #e5e7eb; /* 薄いボーダーを追加 */
+}
+
+#task-list li input[type="checkbox"] {
+    margin-right: 0.75rem; /* 右マージンを少し増やす */
+    cursor: pointer; /* カーソルをポインターに */
+    /* チェックボックスのサイズを少し大きくする (オプション) */
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+#task-list li span {
+    flex-grow: 1; /* 横幅いっぱい */
+    color: #374151; /* デフォルトの文字色 */
+    word-break: break-all; /* 長い単語も折り返す */
+}
+
+#task-list li span.completed {
+    text-decoration: line-through; /* 打ち消し線 */
+    color: #6b7280; /* 文字色 (グレー) */
+}
+
+#task-list li button {
+    background-color: #ef4444; /* 背景色 (赤) */
+    color: #ffffff; /* 文字色 (白) */
+    border: none; /* ボーダーなし */
+    padding: 0.25rem 0.5rem; /* パディング */
+    border-radius: 0.5rem; /* 角丸 */
+    font-size: 0.75rem; /* 小さいフォントサイズ */
+    cursor: pointer; /* カーソルをポインターに */
+    margin-left: 0.5rem; /* 左マージン */
+    transition: background-color 0.2s; /* ホバー時のトランジション */
+}
+
+#task-list li button:hover {
+    background-color: #dc2626; /* ホバー時の背景色 (濃い赤) */
+}
