@@ -4,124 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TODOリスト</title>
-    <style>
-        body {
-            background-color: #f3f4f6; /* 薄いグレー */
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; /* 上寄せ（垂直中央揃えはコンテナで行う）*/
-            min-height: 100vh;
-            margin: 0;
-            font-family: sans-serif;
-        }
-
-        .container {
-            background-color: #ffffff; /* 白い背景 */
-            padding: 1.5rem; /* 適切なパディング */
-            border-radius: 0.5rem; /* 角丸 */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 影 */
-            max-width: 28rem; /* 最大幅 */
-            width: 90%; /* スマホ等での幅調整 */
-            margin-top: 2rem; /* 上マージン */
-        }
-
-        h1 {
-            font-size: 1.5rem; /* 大きいフォントサイズ */
-            font-weight: bold; /* 太字 */
-            margin-bottom: 1rem; /* 下マージン */
-            text-align: center; /* 中央揃え */
-            color: #1f2937;
-        }
-
-        .input-area {
-            display: flex; /* 横並び */
-            margin-bottom: 1rem; /* 下マージン */
-        }
-
-        .input-area input[type="text"] {
-            flex-grow: 1; /* 横幅いっぱいに広がる */
-            padding: 0.5rem; /* パディング */
-            border: 1px solid #ccc; /* ボーダー */
-            border-top-left-radius: 0.5rem; /* 左側の角丸 */
-            border-bottom-left-radius: 0.5rem; /* 左側の角丸 */
-            border-right: none; /* ボタンとの境界線をなくす */
-            font-size: 1rem;
-        }
-
-        .input-area input[type="text"]:focus {
-            outline: none; /* フォーカス時のアウトライン削除 */
-            border-color: #3b82f6; /* フォーカス時のボーダー色 */
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); /* フォーカス時の影 */
-            z-index: 1; /* ボタンより手前に表示 */
-        }
-
-        .input-area button {
-            background-color: #3b82f6; /* 背景色: 青 */
-            color: #ffffff; /* 文字色: 白 */
-            padding: 0.5rem 1rem; /* パディング */
-            border: none;
-            border-top-right-radius: 0.5rem; /* 右側の角丸 */
-            border-bottom-right-radius: 0.5rem; /* 右側の角丸 */
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.2s ease;
-        }
-
-        .input-area button:hover {
-            background-color: #2563eb; /* ホバー時の背景色 */
-        }
-
-        #taskList {
-            list-style: none; /* リストマーカー非表示 */
-            padding: 0; /* パディングリセット */
-            display: flex; /* Flexbox */
-            flex-direction: column; /* 縦方向 */
-            gap: 0.5rem; /* タスク間のスペース */
-        }
-
-        #taskList li {
-            display: flex; /* 要素を中央揃え */
-            align-items: center; /* 要素を垂直中央揃え */
-            background-color: #f9fafb; /* 背景色: 薄いグレー */
-            padding: 0.75rem 0.5rem; /* パディング */
-            border-radius: 0.5rem; /* 角丸 */
-            border: 1px solid #e5e7eb;
-        }
-
-        #taskList li input[type="checkbox"] {
-            margin-right: 0.75rem; /* 右マージン */
-            cursor: pointer;
-            width: 1rem;
-            height: 1rem;
-        }
-
-        #taskList li span {
-            flex-grow: 1; /* 横幅いっぱいに広がる */
-            word-break: break-all; /* 長い単語の折り返し */
-            color: #374151;
-        }
-
-        #taskList li.completed span {
-            text-decoration: line-through; /* 打ち消し線 */
-            color: #6b7280; /* 文字色: グレー */
-        }
-
-        #taskList li button {
-            background-color: #ef4444; /* 背景色: 赤 */
-            color: #ffffff; /* 文字色: 白 */
-            padding: 0.25rem 0.5rem; /* 左右パディング */
-            border: none;
-            border-radius: 0.5rem; /* 角丸 */
-            font-size: 0.75rem; /* 小さいフォントサイズ */
-            cursor: pointer;
-            margin-left: 0.5rem; /* 左マージン */
-            transition: background-color 0.2s ease;
-        }
-
-        #taskList li button:hover {
-            background-color: #dc2626; /* ホバー時の背景色 */
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -135,7 +18,6 @@
         </ul>
     </div>
 
-    <!-- TypeScriptコンパイル後のJavaScriptファイルを読み込む -->
-    <script src="dist/index.js"></script>
+    <script src="dist/main.js"></script>
 </body>
 </html>

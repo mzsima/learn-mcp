@@ -2,12 +2,12 @@
 body {
     background-color: #f3f4f6; /* 薄いグレー */
     display: flex;
-    justify-content: center; /* 水平中央揃え (コンテナ用) */
-    align-items: flex-start; /* 垂直方向は上寄せ（コンテナを中央に見せるため） */
+    justify-content: center;
+    align-items: flex-start; /* コンテンツを上部に寄せる (垂直中央揃えはコンテナ自体で行う) */
     min-height: 100vh; /* 画面の高さいっぱいに */
-    margin: 0;
-    padding-top: 5rem; /* 上部にスペース */
-    font-family: sans-serif; /* 基本フォント */
+    padding-top: 5rem; /* 上部に余白を追加して中央に見えるように調整 */
+    font-family: sans-serif; /* 基本的なフォント */
+    margin: 0; /* デフォルトのマージンをリセット */
 }
 
 .container {
@@ -16,7 +16,7 @@ body {
     border-radius: 0.5rem; /* 角丸 */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 影 */
     max-width: 28rem; /* 最大幅 */
-    width: 90%; /* 幅（小さい画面用） */
+    width: 90%; /* 小画面での幅調整 */
 }
 
 /* タイトル */
@@ -25,7 +25,7 @@ h1 {
     font-weight: bold; /* 太字 */
     margin-bottom: 1rem; /* 下マージン */
     text-align: center; /* 中央揃え */
-    color: #1f2937; /* 文字色 */
+    color: #333; /* 文字色 */
 }
 
 /* 入力エリア */
@@ -40,26 +40,27 @@ h1 {
     border: 1px solid #ccc; /* ボーダー */
     border-top-left-radius: 0.5rem; /* 左側の角丸 */
     border-bottom-left-radius: 0.5rem;
-    border-right: none; /* 右ボーダー削除 */
-    font-size: 1rem; /* フォントサイズ */
+    border-right: none; /* ボタンとの境界線をなくす */
+    font-size: 1rem; /* フォントサイズ調整 */
 }
 
 #taskInput:focus {
-    outline: none; /* デフォルトのアウトライン削除 */
+    outline: none; /* デフォルトのアウトラインを削除 */
     border-color: #3b82f6; /* フォーカス時のボーダー色 */
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); /* フォーカス時の影 */
+    z-index: 1; /* フォーカス時にボタンの上に表示 */
 }
 
 #addButton {
     background-color: #3b82f6; /* 背景色 (青) */
     color: #ffffff; /* 文字色 (白) */
     padding: 0.5rem 1rem; /* パディング */
-    border: none; /* ボーダーなし */
+    border: none; /* デフォルトのボーダーを削除 */
     border-top-right-radius: 0.5rem; /* 右側の角丸 */
     border-bottom-right-radius: 0.5rem;
     cursor: pointer; /* カーソルをポインターに */
-    font-size: 1rem; /* フォントサイズ */
-    transition: background-color 0.2s; /* ホバー効果用トランジション */
+    font-size: 1rem; /* フォントサイズ調整 */
+    transition: background-color 0.2s; /* ホバー時のトランジション */
 }
 
 #addButton:hover {
@@ -71,39 +72,47 @@ h1 {
     list-style: none; /* リストマーカー非表示 */
     padding: 0; /* パディングリセット */
     margin: 0; /* マージンリセット */
-    display: flex; /* Flexbox使用 */
-    flex-direction: column; /* 縦並び */
+    display: flex; /* Flexboxを使用 */
+    flex-direction: column; /* 縦方向に並べる */
     gap: 0.5rem; /* タスク間のスペース */
 }
 
-/* 各タスク */
-li {
-    display: flex; /* Flexbox使用 */
-    align-items: center; /* 要素を垂直中央揃え */
+/* 各タスク (li) */
+.task-item {
+    display: flex; /* 要素を中央揃え */
+    align-items: center;
     background-color: #f9fafb; /* 背景色 (薄いグレー) */
-    padding: 0.75rem; /* パディング */
+    padding: 0.5rem; /* パディング */
     border-radius: 0.5rem; /* 角丸 */
-    border: 1px solid #e5e7eb; /* ボーダー */
+    border: 1px solid #eee; /* 境界線 */
 }
 
-li input[type="checkbox"] {
-    margin-right: 0.75rem; /* 右マージン */
+/* チェックボックス */
+.task-item input[type="checkbox"] {
+    margin-right: 0.5rem; /* 右マージン */
     cursor: pointer; /* カーソルをポインターに */
-    transform: scale(1.2); /* 少し大きく */
+    /* チェックボックスのサイズを少し大きくする (任意) */
+    width: 1.2em;
+    height: 1.2em;
 }
 
-li span {
+/* タスク名 (span) */
+.task-item .task-text {
     flex-grow: 1; /* 横幅いっぱい */
-    color: #374151; /* 通常の文字色 */
-    word-break: break-all; /* 長いテキストで折り返す */
+    color: #333; /* デフォルトの文字色 */
+    overflow: hidden; /* はみ出したテキストを隠す */
+    text-overflow: ellipsis; /* はみ出しを...で表示 */
+    white-space: nowrap; /* 折り返しを防ぐ */
 }
 
-li span.completed {
+/* 完了時のタスク名 */
+.task-item.completed .task-text {
     text-decoration: line-through; /* 打ち消し線 */
-    color: #6b7280; /* 完了時の文字色 (グレー) */
+    color: #6b7280; /* 文字色 (グレー) */
 }
 
-li button {
+/* 削除ボタン */
+.task-item .delete-button {
     background-color: #ef4444; /* 背景色 (赤) */
     color: #ffffff; /* 文字色 (白) */
     border: none; /* ボーダーなし */
@@ -112,9 +121,10 @@ li button {
     font-size: 0.75rem; /* 小さいフォントサイズ */
     cursor: pointer; /* カーソルをポインターに */
     margin-left: 0.5rem; /* 左マージン */
-    transition: background-color 0.2s; /* ホバー効果用トランジション */
+    transition: background-color 0.2s; /* ホバー時のトランジション */
+    white-space: nowrap; /* テキストが折り返さないように */
 }
 
-li button:hover {
+.task-item .delete-button:hover {
     background-color: #dc2626; /* ホバー時の背景色 */
 }

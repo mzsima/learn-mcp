@@ -1,17 +1,75 @@
 // DOM要素の取得
-const taskInput = document.getElementById('task-input');
-const addButton = document.getElementById('add-button');
-const taskList = document.getElementById('task-list');
+const taskInput = document.getElementById('taskInput');
+const addButton = document.getElementById('addButton');
+const taskList = document.getElementById('taskList');
 
 // タスクを格納する配列 (localStorageから読み込む)
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-// 初期表示時にlocalStorageからタスクを読み込んで表示する関数
-function loadTasks() {
-    // taskListをクリア
+// タスクリストを描画する関数
+function renderTasks() {
+    // リストをクリア
     taskList.innerHTML = '';
-    // tasks配列の各タスクを描画
-    tasks.forEach(task => renderTask(task));
+
+    // tasks配列の各タスクに対して要素を作成
+    tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+
+        // チェックボックス
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = task.completed;
+        checkbox.addEventListener('change', () => toggleComplete(index)); // 完了/未完了切り替え
+
+        // タスク名 (span)
+        const span = document.createElement('span');
+        span.textContent = task.text;
+        if (task.completed) {
+            span.classList.add('completed'); // 完了済みクラスを追加
+        }
+
+        // 削除ボタン
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '削除';
+        deleteButton.addEventListener('click', () => deleteTask(index)); // 削除処理
+
+        // li要素に各要素を追加
+        li.appendChild(checkbox);
+        li.appendChild(span);
+        li.appendChild(deleteButton);
+
+        // ul要素にli要素を追加
+        taskList.appendChild(li);
+    });
+}
+
+// タスクを追加する関数
+function addTask() {
+    const taskText = taskInput.value.trim(); // 前後の空白を削除
+
+    // 入力が空でなければタスクを追加
+    if (taskText !== '') {
+        tasks.push({ text: taskText, completed: false }); // 新しいタスクを配列に追加
+        taskInput.value = ''; // 入力フィールドをクリア
+        saveTasks(); // localStorageに保存
+        renderTasks(); // リストを再描画
+    } else {
+        alert('タスクを入力してください。'); // 空の場合はアラート
+    }
+}
+
+// タスクの完了/未完了を切り替える関数
+function toggleComplete(index) {
+    tasks[index].completed = !tasks[index].completed; // 状態を反転
+    saveTasks(); // localStorageに保存
+    renderTasks(); // リストを再描画
+}
+
+// タスクを削除する関数
+function deleteTask(index) {
+    tasks.splice(index, 1); // 配列からタスクを削除
+    saveTasks(); // localStorageに保存
+    renderTasks(); // リストを再描画
 }
 
 // タスクをlocalStorageに保存する関数
@@ -19,112 +77,14 @@ function saveTasks() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// 新しいタスクをリストに追加する関数
-function addTask() {
-    const taskText = taskInput.value.trim(); // 入力値を取得し、前後の空白を削除
-
-    // 入力が空の場合は処理を中断
-    if (taskText === '') {
-        alert('タスクを入力してください。'); // または何らかのフィードバック
-        return;
-    }
-
-    // 新しいタスクオブジェクトを作成
-    const newTask = {
-        id: Date.now(), // ユニークなIDとしてタイムスタンプを使用
-        text: taskText,
-        completed: false
-    };
-
-    // tasks配列に新しいタスクを追加
-    tasks.push(newTask);
-
-    // localStorageに保存
-    saveTasks();
-
-    // 新しいタスクをDOMに描画
-    renderTask(newTask);
-
-    // 入力フィールドを空にする
-    taskInput.value = '';
-}
-
-// タスクをDOMに描画する関数
-function renderTask(task) {
-    // li要素を作成
-    const listItem = document.createElement('li');
-    listItem.setAttribute('data-id', task.id); // data属性にIDを設定
-
-    // チェックボックスを作成
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = task.completed;
-    // チェックボックスの状態変更イベント
-    checkbox.addEventListener('change', () => toggleTask(task.id));
-
-    // タスク名を表示するspan要素を作成
-    const taskSpan = document.createElement('span');
-    taskSpan.textContent = task.text;
-    if (task.completed) {
-        taskSpan.classList.add('completed'); // 完了状態ならcompletedクラスを追加
-    }
-
-    // 削除ボタンを作成
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = '削除';
-    // 削除ボタンのクリックイベント
-    deleteButton.addEventListener('click', () => deleteTask(task.id));
-
-    // li要素に各要素を追加
-    listItem.appendChild(checkbox);
-    listItem.appendChild(taskSpan);
-    listItem.appendChild(deleteButton);
-
-    // ul要素にli要素を追加
-    taskList.appendChild(listItem);
-}
-
-// タスクの完了/未完了を切り替える関数
-function toggleTask(taskId) {
-    // tasks配列から該当タスクを検索
-    tasks = tasks.map(task => {
-        if (task.id === taskId) {
-            return { ...task, completed: !task.completed }; // completed状態を反転
-        }
-        return task;
-    });
-
-    // localStorageに保存
-    saveTasks();
-
-    // DOMを再描画（特定の要素だけ更新する方が効率的だが、簡単のため全体を再描画）
-    loadTasks(); // 再描画して打ち消し線などを反映
-}
-
-// タスクを削除する関数
-function deleteTask(taskId) {
-    // tasks配列から該当タスクを除外
-    tasks = tasks.filter(task => task.id !== taskId);
-
-    // localStorageに保存
-    saveTasks();
-
-    // DOMから該当タスクのli要素を削除
-    const listItem = taskList.querySelector(`li[data-id="${taskId}"]`);
-    if (listItem) {
-        taskList.removeChild(listItem);
-    }
-}
-
 // イベントリスナーの設定
-// 「追加」ボタンクリック時
 addButton.addEventListener('click', addTask);
-// 入力フィールドでEnterキー押下時
-taskInput.addEventListener('keypress', (event) => {
+// Enterキーでもタスクを追加できるようにする
+taskInput.addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         addTask();
     }
 });
 
-// 初期タスクの読み込みと表示
-loadTasks();
+// 初期描画（ページ読み込み時にlocalStorageからタスクを読み込んで表示）
+renderTasks();
